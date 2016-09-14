@@ -1,7 +1,7 @@
 {
     "variables": {
-        "disk_size": "61440",
-        "password": "vagrant"
+        "disk_size": "20480",
+        "password": "password123"
     },
 
     "builders": [
@@ -11,17 +11,24 @@
             "type": "qemu",
             "format":"qcow2",
             "accelerator": "kvm",
-
+            
+			"headless": true,
             "disk_size": "{{ user `disk_size`}}",
             "disk_interface":"virtio",
-
-            "iso_url": "http://care.dlservice.microsoft.com/dl/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
+            "net_device": "virtio-net",
+			
+            "iso_url": "http://192.166.69.12/Softwares/OS/win2012/cn_windows_server_2012_r2_with_update_x64_dvd_6052725.iso",
             "iso_checksum_type": "md5",
-            "iso_checksum": "5b5e08c490ad16b59b1d9fab0def883a",
+            "iso_checksum": "02932EA7F9D81A452290DFF5C8B2C8C5",
 
             "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
             "boot_wait": "2s",
 
+            "vnc_port_min": 5947,
+            "vnc_port_max": 5947,
+            "ssh_host_port_min": 2222,
+            "ssh_host_port_max": 2222,
+			
             "floppy_files": [
                 "floppy/drivers/virtio-win-0.1.117/viostor/2k12R2/amd64/*",
                 "floppy/drivers/virtio-win-0.1.117/NetKVM/2k12R2/amd64/*",
@@ -31,13 +38,15 @@
 
             "communicator": "winrm",
 
-            "winrm_username": "vagrant",
-            "winrm_password": "vagrant",
+            "winrm_username": "admin",
+            "winrm_password": "password123",
             "winrm_timeout": "10000s",
 
             "qemuargs": [
                 [ "-m", "4048M" ],
-                [ "-cpu", "Westmere" ]
+                [ "-cpu", "Westmere" ],
+				[ "-device", "virtio-net,netdev=user.0" ],
+                [ "-device", "virtio-balloon-pci,id=balloon0,bus=pci.0" ]
             ]
         }
     ],

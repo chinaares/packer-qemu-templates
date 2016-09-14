@@ -79,11 +79,13 @@
           <!-- Do not uncomment the Key element if you are using trial ISOs -->
           <!-- You must uncomment the Key element (and optionally insert your own key) if you are using retail or volume license ISOs -->
           <!-- <Key></Key> -->
-          <WillShowUI>OnError</WillShowUI>
+          <!-- <WillShowUI>OnError</WillShowUI> -->
+		  <Key>YJQK4-VNR69-QGGY4-86FQQ-2WDW8</Key>
+		  <WillShowUI>Never</WillShowUI>
         </ProductKey>
         <AcceptEula>true</AcceptEula>
-        <FullName>Vagrant</FullName>
-        <Organization>Vagrant</Organization>
+        <FullName>admin</FullName>
+        <Organization>Sumapay.com</Organization>
       </UserData>
     </component>
   </settings>
@@ -94,7 +96,7 @@
         <HelpCustomized>false</HelpCustomized>
       </OEMInformation>
       <ComputerName>windows-2012-r2</ComputerName>
-      <TimeZone>Central Europe Standard Time</TimeZone>
+      <TimeZone>China Standard Time</TimeZone>
       <RegisteredOwner/>
     </component>
 
@@ -108,7 +110,28 @@
       <IEHardenAdmin>false</IEHardenAdmin>
       <IEHardenUser>false</IEHardenUser>
     </component>
-
+	<component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <RunSynchronous>
+                <!-- Download Cloudbase-Init -->
+                <RunSynchronousCommand wcm:action="add">
+                    <Order>1</Order>
+                    <Path>powershell -NoLogo -Command "Invoke-WebRequest -Uri http://192.166.69.12/Softwares/OS/CloudbaseInitSetup_x64.msi -OutFile C:\Windows\Temp\CloudbaseInitSetup.msi "</Path>
+                    <Description>Download Cloudbase-Init Setup</Description>
+                </RunSynchronousCommand>
+                <RunSynchronousCommand wcm:action="add">
+                    <Order>2</Order>
+                    <Path>msiexec /i C:\Windows\Temp\CloudbaseInitSetup.msi /qn /l*v C:\Windows\Temp\CloudbaseInitSetup.log LOGGINGSERIALPORTNAME=COM1</Path>
+                    <Description>Execute tools deployment script</Description>
+                </RunSynchronousCommand>
+				<!--
+                <RunSynchronousCommand wcm:action="add">
+                    <Order>2</Order>
+                    <Path>msiexec /i C:\Windows\Temp\CloudbaseInitSetup.msi /qn /l*v C:\Windows\Temp\CloudbaseInitSetup.log NETWORKADAPTERNAME="Red Hat VirtIO Ethernet Adapter" LOGGINGSERIALPORTNAME=COM1</Path>
+                    <Description>Execute tools deployment script</Description>
+                </RunSynchronousCommand>
+				-->
+            </RunSynchronous>
+        </component>
   </settings>
 
   <settings pass="oobeSystem">
@@ -118,11 +141,11 @@
            which runs first logon commands -->
       <AutoLogon>
         <Password>
-          <Value>vagrant</Value>
+          <Value>password123</Value>
           <PlainText>true</PlainText>
         </Password>
         <Enabled>true</Enabled>
-        <Username>vagrant</Username>
+        <Username>admin</Username>
       </AutoLogon>
 
       <FirstLogonCommands>
@@ -148,20 +171,20 @@
       <UserAccounts>
 
         <AdministratorPassword>
-          <Value>vagrant</Value>
+          <Value>password123</Value>
           <PlainText>true</PlainText>
         </AdministratorPassword>
 
         <LocalAccounts>
           <LocalAccount wcm:action="add">
             <Password>
-              <Value>vagrant</Value>
+              <Value>password123</Value>
               <PlainText>true</PlainText>
             </Password>
             <Group>administrators</Group>
-            <DisplayName>Vagrant</DisplayName>
-            <Name>vagrant</Name>
-            <Description>Vagrant User</Description>
+            <DisplayName>admin</DisplayName>
+            <Name>admin</Name>
+            <Description>Admin User</Description>
           </LocalAccount>
         </LocalAccounts>
       </UserAccounts>
